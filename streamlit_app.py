@@ -8,6 +8,57 @@ import re
 # Set page config
 st.set_page_config(page_title="ModCloth Dashboard", layout="wide")
 
+def load_dataset():
+    # Load the dataset from JSON file (JSON Lines format)
+    modcloth_final_data = pd.read_json('dataset/modcloth_final_data/modcloth_final_data.json', lines=True)
+    return modcloth_final_data
+
+def to_snake_case(col):
+        col = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', col)
+        col = re.sub('([a-z0-9])([A-Z])', r'\1_\2', col)
+        col = col.replace('__', '_')
+        col = col.replace(' ', '_')
+        col = col.replace('.', '_')
+        col = col.replace('-', '_')
+        return col.lower()
+
+def clean_datset():
+    modcloth_final_data = load_dataset()
+
+    modcloth_final_data.columns = [to_snake_case(col) for col in modcloth_final_data.columns]
+
+    # Data cleaning for modcloth_final_data
+
+    # 1. Remove duplicates
+    modcloth_final_data = modcloth_final_data.drop_duplicates()
+
+    # 2. Drop rows with missing essential values (e.g., item_id, review_text, quality)
+    modcloth_final_data = modcloth_final_data.dropna(subset=['item_id', 'review_text', 'quality'])
+
+    # 3. Fill missing values in less critical columns with sensible defaults
+    modcloth_final_data['category'] = modcloth_final_data['category'].fillna('unknown')
+    modcloth_final_data['bust'] = modcloth_final_data['bust'].fillna('unknown')
+    modcloth_final_data['cup_size'] = modcloth_final_data['cup_size'].fillna('unknown')
+    modcloth_final_data['shoe_width'] = modcloth_final_data['cup_size'].fillna('unknown')
+    modcloth_final_data['cup_size'] = 'cup_size_' + modcloth_final_data['cup_size'].astype(str)
+    modcloth_final_data['height'] = modcloth_final_data['height'].fillna('unknown')
+    modcloth_final_data['waist'] = modcloth_final_data['waist'].fillna(modcloth_final_data['waist'].median())
+    modcloth_final_data['size'] = modcloth_final_data['size'].fillna(modcloth_final_data['size'].median())
+    modcloth_final_data['shoe_size'] = modcloth_final_data['shoe_size'].fillna(modcloth_final_data['shoe_size'].median())
+    modcloth_final_data['hips'] = modcloth_final_data['hips'].fillna(modcloth_final_data['hips'].median())
+
+
+    # 4. Strip whitespace from string columns
+    for col in ['review_text', 'category']:
+        modcloth_final_data[col] = modcloth_final_data[col].astype(str).str.strip()
+
+    # 5. Reset index after cleaning
+    modcloth_final_data = modcloth_final_data.reset_index(drop=True)
+
+    modcloth_final_data = modcloth_final_data.rename(columns={'quality': 'rating'})
+
+    return modcloth_final_data
+
 # --- Data Loading & Cleaning ---
 @st.cache_data
 def load_data():
@@ -63,7 +114,7 @@ def load_data():
 
     return df
 
-df = load_data()
+df = clean_datset()
 
 if df is not None:
     # --- Sidebar ---
