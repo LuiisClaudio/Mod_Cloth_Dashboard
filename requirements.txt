@@ -1,1 +1,11 @@
 streamlit
+pandas
+plotly
+scikit-learn
+re
+matplotlib
+ipywidgets
+wordcloud
+textblob
+spacy
+plotFunctions
