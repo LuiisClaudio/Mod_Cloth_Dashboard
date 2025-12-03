@@ -595,7 +595,7 @@ if df is not None:
         <div style="background-color: #f0f2f6; padding: 15px; border-radius: 10px; margin-top: 20px;">
             <h4 style="color: #1f77b4; margin-top: 0;">💡 What's this about?</h4>
             <p>Pulls out the most common adjectives from reviews. Word size = how often it's used. Instantly shows you what customers are actually saying.</p>
-            <p>Color coding by sentiment (green = positive words, red = negative) shows both frequency AND emotional tone at once.</p>
+            <p>Color coding by sentiment (blue = positive words, red = negative) shows both frequency AND emotional tone at once.</p>
             <p>This captures authentic customer language for marketing, reveals what attributes customers actually care about, and shows gaps between what you say about products and what customers think.</p>
         </div>
         """, unsafe_allow_html=True)
