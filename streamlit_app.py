@@ -80,7 +80,6 @@ if df is not None:
             "Does It Fit? Category Heatmap",
             "Height vs. Length Boxplot",
             "Fit Distribution (Donut Chart)",
-            "Fit by Category (100% Stacked Horizontal Bar)",
             "Sizing Consistency (Strip Plot)"
         ],
         "📏 Body Measurements": [
@@ -92,15 +91,12 @@ if df is not None:
         ],
         "⭐ Ratings & Reviews": [
             "Rating vs. Category",
-            #"Rating Distribution Histogram",
             "Rating Distribution (Bar Chart)",
-            "Quality Violin Plot",
             "Review Length vs. Rating",
             "Sentiment Polarity vs. Rating"
         ],
         "🏷️ Product & Category": [
             "Category Breakdown",
-            "Top Categories (Horizontal Bar Chart)",
             "Category Treemap",
             "Popularity Head/Tail",
             "Quality vs. Popularity Matrix (Bubble Chart)"
@@ -201,8 +197,8 @@ if df is not None:
         <div style="background-color: #f0f2f6; padding: 15px; border-radius: 10px; margin-top: 20px;">
             <h4 style="color: #1f77b4; margin-top: 0;">💡 What's this about?</h4>
             <p>Each bar is a clothing category (dresses, tops, etc.), split into colored sections showing how many people said "too small," "perfect," or "too big."</p>
-            <p>The colors aren't random orange for "too small" (problem), gray for "perfect" (good), blue for "too big" (also a problem). Your brain already knows red = bad and green = good, so it feels natural.</p>
-            <p>This tells you which categories have sizing problems. If dresses are mostly orange, size them up. If jeans are mostly grey, you nailed it don't change a thing!</p>
+            <p>The colors aren't random red for "too small" (problem), green for "perfect" (good), yellow for "too big" (also a problem). Your brain already knows red = bad and green = good, so it feels natural.</p>
+            <p>This tells you which categories have sizing problems. If dresses are mostly red, size them up. If jeans are mostly green, you nailed it don't change a thing!</p>
         </div>
         """, unsafe_allow_html=True)
 
@@ -328,9 +324,8 @@ if df is not None:
         st.markdown("""
         <div style="background-color: #f0f2f6; padding: 15px; border-radius: 10px; margin-top: 20px;">
             <h4 style="color: #1f77b4; margin-top: 0;">💡 What's this about?</h4>
-            <p>Pie charts answer "what chunk of my business is each category?" Your brain gets circles better than numbers, so seeing "this is about a quarter of the pie" is more intuitive than "23.7%."</p>
-            <p>We only show top categories and lump small ones into "Other" because 50 tiny slices would be useless and ugly. Percentages are there when you need specifics.</p>
-            <p>This shows your business mix. Are you mostly dresses with some accessories? Pretty balanced? If you say you're diversified but 60% is one category, that's risky if trends shift.</p>
+            <p>Bar charts answer "what chunk of my business is each category?" Your brain gets bars better than numbers, so seeing is more intuitive"</p>
+            <p>This shows your business mix on reviews. Are you mostly dresses reviews? Pretty balanced? If you say you're diversified but 60% is one category, that's risky if trends shift.</p>
         </div>
         """, unsafe_allow_html=True)
 
@@ -370,7 +365,7 @@ if df is not None:
     elif page == "Does It Fit? Category Heatmap":
         st.title("👗 Does It Fit? Category Heatmap")
         
-        fig_body_size = pf.plot_fit_by_category(df)
+        fig_body_size = pf.plot_fit_category_heatmap(df)
         st.plotly_chart(fig_body_size, use_container_width=True)
         
         st.markdown("""
@@ -561,7 +556,7 @@ if df is not None:
     elif page == "Quality vs. Popularity Matrix (Bubble Chart)":
         st.title("🏷️ Quality vs. Popularity Matrix (Bubble Chart)")
         
-        fig_body_size = pf.plot_sizing_consistency(df)
+        fig_body_size = pf.plot_quality_popularity_matrix(df)
         st.plotly_chart(fig_body_size, use_container_width=True)
         
         st.markdown("""
