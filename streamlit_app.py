@@ -7,6 +7,7 @@ import re
 import plotFunctions as pf
 # Set page config
 st.set_page_config(page_title="ModCloth Dashboard", layout="wide")
+st._config.set_option('theme.base', 'light')
 
 def load_dataset():
     # Load the dataset from JSON file (JSON Lines format)
